@@ -1,55 +1,89 @@
 # Smart Parking
 
-A MATLAB parking occupancy project that compares a current image with an empty reference and evaluates individually marked parking spaces. It retains the original six-lane demonstration and supports other fixed-camera parking layouts.
+### From parking images to space availability
 
-## Run
+A MATLAB application that compares a parking image with an empty reference, estimates occupancy for individually marked spaces, and recommends an available lane.
 
-Requires MATLAB R2021a or later. No additional toolboxes are required. Open this folder in MATLAB and run:
+**MATLAB R2021a+ · No additional toolboxes · Custom layouts · CSV export**
+
+[Quick start](#quick-start) · [How it works](#how-it-works) · [Tests](#tests) · [Limitations](#limitations)
+
+## Sample images
+
+| Empty reference | Current parking image |
+| :---: | :---: |
+| ![Empty parking lot](bg.jpeg) | ![Parking lot with cars](car.jpeg) |
+
+These are input examples, not detection results. The current pair shows 18 spaces. Use **Choose images** and mark those spaces; the historical **Bundled demo** preset assumes a different 36-space layout.
+
+## Features
+
+- Select your own current and empty-reference images.
+- Mark individual spaces and assign lane numbers.
+- Save and reload layouts for the same camera viewpoint.
+- View occupied/free overlays and the changed-pixel mask.
+- Review per-lane availability and export per-space results to CSV.
+- Adjust detection thresholds without changing the source code.
+
+## Quick start
+
+1. Download or clone this repository.
+2. Open the project folder as MATLAB’s current folder.
+3. Run:
 
 ```matlab
 smartParking
 ```
 
-Choose **Choose images** to select the current parking image and empty reference, then mark the spaces. **Bundled demo** uses the historical 36-space preset; use it only with images matching that layout. Replacing the images requires a matching layout.
+4. Select **Choose images**. Choose `car.jpeg` as the current image and `bg.jpeg` as the empty reference.
+5. Choose **Mark spaces**, then click two opposite corners of each parking space and assign a positive lane number. Save the layout to reuse it.
+6. Start with thresholds **0.15** and **0.18**, inspect the results, and export a CSV if needed.
 
-## Use your own images
+For another parking lot, use images captured from the same fixed camera position and framing. A saved layout is specific to that view. Resizing can match dimensions but cannot correct camera movement.
 
-1. Capture an empty parking area and a current image from exactly the same camera position, with matching framing. Keep lighting as consistent as possible.
-2. Choose the current image, then the empty reference. Different dimensions require explicit confirmation before resizing; resizing does not correct camera movement or perspective changes.
-3. Mark each individual parking space on the reference. Click two opposite corners of each space, assign its lane number, then add another space or finish. Press Enter while selecting corners to finish. Avoid including driveways and neighboring spaces. Cancel the lane dialog to stop marking.
-4. Save the layout if desired. Load that layout only for the same camera framing. Each rectangle corresponds to one space, so capacity follows the layout rather than a hardcoded total.
-5. Set thresholds, review the colored overlay and changed-pixel mask, and optionally export the per-space CSV. Green means available; red means occupied. The highest-numbered lane with available spaces is recommended, preserving the old preference.
+## How it works
 
-The pixel difference threshold controls how much a pixel must change (default 0.15 of the grayscale range). The occupied fraction threshold controls how much of a space must change (default 18%). Increase thresholds to reduce sensitivity; decrease them to detect smaller changes. Validate settings using known empty and occupied examples from your own camera.
+```text
+Current image + empty reference
+              ↓
+Grayscale conversion and absolute difference
+              ↓
+Pixel threshold and 3 × 3 majority filter
+              ↓
+Changed-pixel fraction inside each marked space
+              ↓
+Occupied/free classification → lane availability → CSV
+```
 
-## What changed
+| Setting | Default | Meaning |
+| --- | --- | --- |
+| Pixel difference threshold | 0.15 | Minimum grayscale change on a 0–1 scale |
+| Occupied fraction threshold | 0.18 | Minimum fraction of changed pixels in a space |
 
-- Portable paths and image pickers replace machine-specific Windows paths.
-- Explicit handling of different image dimensions fixes the supplied pair's size mismatch.
-- Individual parking regions replace connected-component car counting, which could merge neighboring cars or split one car into multiple detections.
-- Deterministic filtering replaces artificial random noise.
-- One shared detection function produces consistent lane and overall totals.
-- Validated layout and threshold inputs, reusable layouts, labeled overlays, and CSV export.
-- A single results window replaces repeated lane figures.
+Green boxes indicate estimated availability; red boxes indicate estimated occupancy. The highest-numbered lane with available spaces is recommended. Increase thresholds to reduce sensitivity; decrease them to detect smaller changes. Validate settings against known examples.
 
-## Files
+## Project structure
 
-- `smartParking.m`: interactive image selection, layout marking, and results.
-- `analyzeParking.m`: reusable detection function and input validation.
-- `testParking.m`: synthetic regression tests.
-- `car.jpeg`, `bg.jpeg`: current parking image and empty reference.
+| File | Purpose |
+| --- | --- |
+| `smartParking.m` | Image selection, layout marking, results and export |
+| `analyzeParking.m` | Deterministic detection and input validation |
+| `testParking.m` | Synthetic regression tests |
+| `bg.jpeg` / `car.jpeg` | Empty reference and current sample image |
 
-## Verification
+## Tests
 
-Run the MATLAB tests with:
+Run in MATLAB:
 
 ```matlab
 results = runtests('testParking.m');
 assert(all([results.Passed]), 'Some parking tests failed.');
 ```
 
-Tests cover empty/full scenes, one occupied space, repeatability, lane recommendation, consistent totals, invalid regions, image dimension validation, explicit resizing, and RGB/grayscale input. An automated launch of the installed MATLAB failed with filesystem permission and Qt processor compatibility errors. The MATLAB tests and interactive interface have therefore not been verified in that environment. Run them before submission and manually exercise image selection, rectangle marking, layout save/load, cancel actions, and CSV export.
+Tests cover empty/full scenes, individual occupied spaces, repeatability, lane selection, consistent totals, invalid inputs, RGB/grayscale images, resizing, isolated noise and singleton references.
 
-## Limits
+The earlier 36-space demo was manually run successfully. The automated MATLAB suite has not yet been confirmed passing; the attempted automated launch encountered local permission and processor compatibility errors. The new image pair still requires a matching layout and validation.
 
-This is a background-comparison prototype, not a trained vehicle detector. It cannot identify vehicle types or reliably distinguish cars from shadows, people, debris, lighting changes, or camera movement. An empty reference is required. Results are estimates and should be checked visually; no accuracy claim has been established on real parking photographs. Overlapping or incorrectly marked spaces can yield misleading results. The bundled images are illustrations with different resolutions; their reference is explicitly resized for the demo. New sites require new layouts and threshold validation.
+## Limitations
+
+This is a background-comparison prototype, not a trained vehicle detector. Shadows, lighting changes, people, debris and camera movement can affect results. It requires an empty reference and correctly marked spaces. It does not identify vehicle types, and no real-world accuracy benchmark has been established.
