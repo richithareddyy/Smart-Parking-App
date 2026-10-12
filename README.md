@@ -1,7 +1,5 @@
 # Smart Parking
 
-### From parking images to space availability
-
 A MATLAB application that compares a parking image with an empty reference, estimates occupancy for individually marked spaces, and recommends an available lane.
 
 **MATLAB R2021a+ · No additional toolboxes · Custom layouts · CSV export**
@@ -15,6 +13,8 @@ A MATLAB application that compares a parking image with an empty reference, esti
 | ![Empty parking lot](bg.jpeg) | ![Parking lot with cars](car.jpeg) |
 
 These are input examples, not detection results. The current pair shows 18 spaces. Use **Choose images** and mark those spaces; the historical **Bundled demo** preset assumes a different 36-space layout.
+
+The approach makes each occupancy decision inspectable: a space is occupied when enough pixels differ from the empty reference. It is useful for exploring background subtraction with a fixed camera and manually defined regions.
 
 ## Features
 
@@ -77,12 +77,13 @@ Run in MATLAB:
 
 ```matlab
 results = runtests('testParking.m');
+assert(~isempty(results), 'No tests discovered; inspect testParking.m.');
 assert(all([results.Passed]), 'Some parking tests failed.');
 ```
 
 Tests cover empty/full scenes, individual occupied spaces, repeatability, lane selection, consistent totals, invalid inputs, RGB/grayscale images, resizing, isolated noise and singleton references.
 
-The earlier 36-space demo was manually run successfully. The automated MATLAB suite has not yet been confirmed passing; the attempted automated launch encountered local permission and processor compatibility errors. The new image pair still requires a matching layout and validation.
+The functions in `testParking.m` currently have names such as `emptyAndFull`; MATLAB requires local test names to start or end with `test` ([functiontests documentation](https://www.mathworks.com/help/matlab/ref/functiontests.html)). Check that `runtests` discovers a nonempty suite before interpreting a result as passing. The supplied image pair also needs a matching layout; the 36-space preset should not be used to validate it.
 
 ## Limitations
 
