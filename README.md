@@ -83,7 +83,7 @@ assert(all([results.Passed]), 'Some parking tests failed.');
 
 Tests cover empty/full scenes, individual occupied spaces, repeatability, lane selection, consistent totals, invalid inputs, RGB/grayscale images, resizing, isolated noise and singleton references.
 
-The functions in `testParking.m` currently have names such as `emptyAndFull`; MATLAB requires local test names to start or end with `test` ([functiontests documentation](https://www.mathworks.com/help/matlab/ref/functiontests.html)). Check that `runtests` discovers a nonempty suite before interpreting a result as passing. The supplied image pair also needs a matching layout; the 36-space preset should not be used to validate it.
+Test functions are named with a `test` prefix so `functiontests` discovers them ([functiontests documentation](https://www.mathworks.com/help/matlab/ref/functiontests.html)), and `testParking` errors if none are found. The supplied image pair also needs a matching layout; the 36-space preset should not be used to validate it.
 
 ## Limitations
 
