@@ -12,7 +12,7 @@ A MATLAB application that compares a parking image with an empty reference, esti
 | :---: | :---: |
 | ![Empty parking lot](bg.jpeg) | ![Parking lot with cars](car.jpeg) |
 
-These are input examples, not detection results. The current pair shows 18 spaces. Use **Choose images** and mark those spaces; the historical **Bundled demo** preset assumes a different 36-space layout.
+These are synthetic parking-lot sample images used as input examples, not real camera photographs or detection results. The current pair shows 18 spaces. Use **Choose images** and mark those spaces; the historical **Bundled demo** preset assumes a different 36-space layout.
 
 The approach makes each occupancy decision inspectable: a space is occupied when enough pixels differ from the empty reference. It is useful for exploring background subtraction with a fixed camera and manually defined regions.
 
