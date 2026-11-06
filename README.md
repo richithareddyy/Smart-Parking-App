@@ -1,6 +1,6 @@
 # Smart Parking
 
-A MATLAB prototype that compares a parking image with an empty reference, estimates which marked spaces are occupied, and recommends an available lane.
+Given an image of a parking lot, which marked spaces look occupied, and which lane still has room? Smart Parking compares that image with an empty reference taken from the same viewpoint. You mark the spaces in a MATLAB interface, and it estimates occupancy from the changed pixels and recommends a lane with available spaces.
 
 **MATLAB R2021a+ · No additional toolboxes**
 
