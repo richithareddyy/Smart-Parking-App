@@ -22,9 +22,9 @@ Choose **Choose images**, select `car.jpeg` as the current image and `bg.jpeg` a
 
 ## How it works
 
-`analyzeParking.m` converts the images to grayscale, takes their absolute difference, filters isolated changed pixels, and measures the changed fraction inside each region. The default pixel threshold is 0.15 and the occupied-fraction threshold is 0.18. The highest-numbered lane with available spaces is recommended.
+`analyzeParking.m` converts both images to grayscale and compares their pixels. After filtering isolated changes, it measures how much of each marked space looks different. With the defaults, a pixel difference above 0.15 counts as changed; a space is marked occupied when at least 18% of its pixels have changed. The app recommends the highest-numbered lane that still has a free space.
 
-This approach makes each decision inspectable, but depends on aligned images from a fixed viewpoint. Lighting, shadows, people, debris, and camera movement can all affect the result. It is not a trained vehicle detector, and no real-world accuracy benchmark has been established.
+This is image comparison, not a trained vehicle detector. The images must line up. Shadows, lighting changes, people, and camera movement can be mistaken for cars. The project has no real-camera accuracy benchmark.
 
 ## Tests
 
