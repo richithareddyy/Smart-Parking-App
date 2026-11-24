@@ -1,0 +1,16 @@
+{
+  "Dataset": "PKLot",
+  "Source": "https://web.inf.ufpr.br/vri/databases/parking-lot-database/",
+  "Archive": "https://www.inf.ufpr.br/vri/databases/PKLot.tar.gz",
+  "License": "CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)",
+  "Citation": "Almeida, P., Oliveira, L. S., Silva Jr, E., Britto Jr, A., Koerich, A. PKLot - A robust dataset for parking lot classification. Expert Systems with Applications, 42(11):4937-4949, 2015.",
+  "Imported": "2026-11-24",
+  "Frames": 12416,
+  "SkippedFrames": 1,
+  "Labels": 719528,
+  "MissingLabels": 25773,
+  "HeldOutCameras": "PUCPR",
+  "SplitRule": "Per camera, days sorted by name: first 0.6 train, next 0.2 validation, rest test. Held-out cameras: first 0.2 setup, rest test.",
+  "ReferenceRule": "Per view, among fully labeled all-vacant frames from non-test days, the frame whose mean brightness is closest to the median of that view's non-test frames.",
+  "ArchiveSHA256": "e89bbc1dc735298c478688d50c7a682fb3b0076a87b6634923132709f2d2fa9b"
+}

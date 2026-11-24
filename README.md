@@ -26,7 +26,7 @@ The results window shows the occupied/free overlay beside the changed-pixel mask
 
 `analyzeParking.m` converts both images to grayscale and compares their pixels. A 3 × 3 majority filter removes isolated changes, then it measures how much of each marked space looks different. With the defaults, a grayscale difference above 0.15 (on a 0–1 scale) counts as changed; a space is marked occupied when at least 18% of its pixels have changed. The app recommends the highest-numbered lane that still has a free space.
 
-This is image comparison, not a trained vehicle detector. The images must line up. Shadows, lighting changes, people, and camera movement can be mistaken for cars, and a car close to the pavement's gray level can be missed. The project has no real-camera accuracy benchmark.
+This is image comparison, not a trained vehicle detector. The images must line up. Shadows, lighting changes, people, and camera movement can be mistaken for cars, and a car close to the pavement's gray level can be missed. On the real-camera [PKLot evaluation](evaluation/README.md), the default settings scored 0.855 balanced accuracy on new days from two known cameras and 0.551, close to chance, on an unseen camera with a poorly matched reference.
 
 ## Tests
 
@@ -36,6 +36,6 @@ assert(~isempty(results), 'No tests discovered.');
 assert(all([results.Passed]), 'Some tests failed.');
 ```
 
-The synthetic regression tests cover occupancy, lane selection, space boundaries, threshold edges, image, layout, and threshold validation, grayscale/RGB images, resizing, and noise in `analyzeParking.m`. They do not cover the interface or replace evaluation on real camera images.
+The synthetic regression tests cover occupancy, lane selection, space boundaries, threshold edges, image, layout, and threshold validation, grayscale/RGB images, resizing, and noise in `analyzeParking.m`. They do not cover the interface or measure accuracy on real camera images. The [evaluation folder](evaluation/README.md) has its own synthetic tests and keeps real-camera results separate.
 
 [Detailed usage and implementation](GUIDE.md)

@@ -87,4 +87,4 @@ Test functions are named with a `test` prefix so `functiontests` discovers them 
 
 ## Limitations
 
-This is a background-comparison prototype, not a trained vehicle detector. Shadows, lighting changes, people, debris and camera movement can affect results. It requires an empty reference and correctly marked spaces. It does not identify vehicle types, and no real-world accuracy benchmark has been established.
+This is a background-comparison prototype, not a trained vehicle detector. Shadows, lighting changes, people, debris and camera movement can affect results. It requires an empty reference and correctly marked spaces. It does not identify vehicle types, and its [real-camera evaluation](evaluation/README.md) shows accuracy depends strongly on the camera and reference.

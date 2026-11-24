@@ -1,0 +1,5 @@
+Setting,Method,DifferenceThreshold,LearningRate,RoiScale,OccupancyThreshold,TrainBalancedAccuracy
+"Reference default",Reference,0.15,0,1,0.18,0.907991975438326
+"Reference default thresholds, tuned ROI",Reference,0.15,0,0.75,0.18,0.921089675902961
+"Reference tuned",Reference,0.2,0,0.75,0.18,0.962219142618467
+"Adaptive tuned",Adaptive,0.15,0.02,0.5,0.24,0.955357140132429
