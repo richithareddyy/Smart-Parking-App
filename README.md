@@ -36,6 +36,6 @@ assert(~isempty(results), 'No tests discovered.');
 assert(all([results.Passed]), 'Some tests failed.');
 ```
 
-The synthetic regression tests cover occupancy, lane selection, image and layout validation, grayscale/RGB images, resizing, and noise in `analyzeParking.m`. They do not cover the interface or replace evaluation on real camera images.
+The synthetic regression tests cover occupancy, lane selection, space boundaries, threshold edges, image, layout, and threshold validation, grayscale/RGB images, resizing, and noise in `analyzeParking.m`. They do not cover the interface or replace evaluation on real camera images.
 
 [Detailed usage and implementation](GUIDE.md)
