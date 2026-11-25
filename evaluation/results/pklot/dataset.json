@@ -11,6 +11,6 @@
   "MissingLabels": 25773,
   "HeldOutCameras": "PUCPR",
   "SplitRule": "Per camera, days sorted by name: first 0.6 train, next 0.2 validation, rest test. Held-out cameras: first 0.2 setup, rest test.",
-  "ReferenceRule": "Per view, among fully labeled all-vacant frames from non-test days, the frame whose mean brightness is closest to the median of that view's non-test frames.",
+  "ReferenceRule": "Per view, among up to 60 evenly spaced fully labeled all-vacant frames from non-test days, the frame whose mean brightness is closest to the median of up to 60 evenly spaced non-test frames.",
   "ArchiveSHA256": "e89bbc1dc735298c478688d50c7a682fb3b0076a87b6634923132709f2d2fa9b"
 }

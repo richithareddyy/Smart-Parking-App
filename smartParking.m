@@ -6,9 +6,9 @@ if isempty(mode) || strcmp(mode,'Cancel'), return; end
 try
     resizeReference = false;
     if strcmp(mode,'Bundled demo')
-        current = imread(fullfile(root,'car.jpeg'));
-        reference = imread(fullfile(root,'bg.jpeg'));
-        % Supplied illustrations depict the same layout at different sizes.
+        current = imread(fullfile(root,'car.png'));
+        reference = imread(fullfile(root,'bg.png'));
+        % Both images share one framing, so a size mismatch would be safe to resize.
         resizeReference = true;
         layout = demoLayout();
     else

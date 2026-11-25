@@ -10,7 +10,7 @@ A MATLAB application that compares a parking image with an empty reference, esti
 
 | Empty reference | Current parking image |
 | :---: | :---: |
-| ![Empty parking lot](bg.jpeg) | ![Parking lot with cars](car.jpeg) |
+| ![Empty parking lot](bg.png) | ![Parking lot with cars](car.png) |
 
 These are synthetic parking-lot sample images used as input examples, not real camera photographs or detection results. The current pair shows 18 spaces. Use **Choose images** and mark those spaces; the historical **Bundled demo** preset assumes a different 36-space layout.
 
@@ -35,7 +35,7 @@ The approach makes each occupancy decision inspectable: a space is occupied when
 smartParking
 ```
 
-4. Select **Choose images**. Choose `car.jpeg` as the current image and `bg.jpeg` as the empty reference.
+4. Select **Choose images**. Choose `car.png` as the current image and `bg.png` as the empty reference.
 5. Choose **Mark spaces**, then click two opposite corners of each parking space and assign a positive lane number. Save the layout to reuse it.
 6. Start with thresholds **0.15** and **0.18**, inspect the results, and export a CSV if needed.
 
@@ -70,7 +70,7 @@ Green boxes indicate estimated availability; red boxes indicate estimated occupa
 | `analyzeParking.m` | Deterministic detection and input validation |
 | `testParking.m` | Synthetic regression tests |
 | `evaluation/` | Real-camera evaluation code, report, results and its own synthetic tests |
-| `bg.jpeg` / `car.jpeg` | Empty reference and current sample image |
+| `bg.png` / `car.png` | Empty reference and current sample image |
 
 ## Tests
 

@@ -6,7 +6,7 @@ Given an image of a parking lot, which marked spaces look occupied, and which la
 
 | Empty reference | Current sample |
 | :---: | :---: |
-| ![Synthetic empty parking lot](bg.jpeg) | ![Synthetic parking lot with cars](car.jpeg) |
+| ![Synthetic empty parking lot](bg.png) | ![Synthetic parking lot with cars](car.png) |
 
 These are **synthetic parking-lot sample images**, not real camera photographs or detection results. The pair shows 18 spaces. **Bundled demo** applies a historical 36-space preset that does not line up with them, so its counts and lane recommendation do not describe this picture.
 
@@ -18,7 +18,7 @@ Make the repository MATLAB's current folder and run:
 smartParking
 ```
 
-Choose **Choose images**, select `car.jpeg` as the current image and `bg.jpeg` as the empty reference, then use **Mark spaces** to define each space and assign a lane. You can save the layout and reload it later for the same camera view. Start with the default thresholds, which you can change on each run. If the two images differ in size, the app asks before resizing the reference.
+Choose **Choose images**, select `car.png` as the current image and `bg.png` as the empty reference, then use **Mark spaces** to define each space and assign a lane. You can save the layout and reload it later for the same camera view. Start with the default thresholds, which you can change on each run. If the two images differ in size, the app asks before resizing the reference.
 
 The results window shows the occupied/free overlay beside the changed-pixel mask. Per-lane availability is printed in the Command Window. The optional CSV lists each space's lane, changed fraction, and occupied flag.
 
