@@ -79,7 +79,7 @@ Training and validation scores are in `results/pklot/summary.csv`.
 
 ## Failure analysis
 
-Breakdowns by camera, weather, hour, brightness, estimated image shift, rectangle overlap and space size are in `conditions.csv`; per-space scores are in `per_space.csv`. These are associations, not proof of cause. Scores below are for the tuned fixed reference.
+Breakdowns by camera, weather, hour, brightness, estimated image shift, rectangle overlap and space size are in `conditions.csv`; per-space scores are in `per_space.csv`. These are associations, not proof of cause. Scores in the list below are for the tuned fixed reference.
 
 - **Lighting:** PUCPR's fully vacant setup frames were only around 06:00 and 18:00, which led to a hazy dawn reference. Where frame and reference brightness were within 0.05, balanced accuracy was 0.927; where the frame was more than 0.10 brighter (85% of observations) it was 0.507. The background update cannot correct a gap larger than its threshold.
 - **Weather:** on known cameras, sunny days were worst (0.909, against 0.956 cloudy and 0.983 rainy).
@@ -87,7 +87,7 @@ Breakdowns by camera, weather, hour, brightness, estimated image shift, rectangl
 - **Low contrast:** red and dark cars can match the pavement's gray level.
 - **Shadows, occlusion and overlap:** shadows and neighboring cars caused some false-occupied errors. PKLot has no shadow or occlusion labels, so these could not be measured for the full set.
 
-A sample of 80 test errors (10 per setting, group and error type, at most one per camera day) was tagged from image crops. This was a single unblinded pass without a second reviewer, and equal sampling means the counts do not estimate overall shares.
+A sample of 80 test errors was tagged from image crops: 10 per tuned setting (fixed and adaptive), group and error type, with at most one per camera day within each set of 10. The 80 sampled errors were tagged in a single AI-assisted pass and have not been checked by a person. Treat the tag counts as tentative. The tags in `review.csv` come from one quick, unblinded look at the contact sheets and have not been independently checked, so treat them as tentative. In several crops tagged low contrast, the car also fills only part of the box. Equal sampling means the counts do not estimate overall shares.
 
 | Group | Error | Tags |
 | --- | --- | --- |
@@ -103,7 +103,7 @@ A sample of 80 test errors (10 per setting, group and error type, at most one pe
 - Bounding boxes of tilted spaces include neighboring areas; rectangles drawn by hand would differ.
 - The adaptive baseline's chosen learning rate and ROI scale are at the edge of the searched range.
 - PKLot covers about two months per camera, between roughly 05:00 and 22:00, with no overnight, snow or labeled shadow data.
-- A learned detector is not justified yet. Most sampled errors come from lighting and low contrast, so brightness normalization and color differences should be tried first.
+- A learned detector is not justified yet. Most sampled errors were tagged lighting or low contrast, so brightness normalization and color differences should be tried first.
 
 ## Reproduce
 
