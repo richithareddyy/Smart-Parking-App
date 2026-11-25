@@ -57,7 +57,7 @@ Occupied/free classification → lane availability → CSV
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| Pixel difference threshold | 0.15 | Minimum grayscale change on a 0–1 scale |
+| Pixel difference threshold | 0.15 | Grayscale change a pixel must exceed, on a 0–1 scale |
 | Occupied fraction threshold | 0.18 | Minimum fraction of changed pixels in a space |
 
 Green boxes indicate estimated availability; red boxes indicate estimated occupancy. The highest-numbered lane with available spaces is recommended. Increase thresholds to reduce sensitivity; decrease them to detect smaller changes. Validate settings against known examples.
@@ -69,6 +69,7 @@ Green boxes indicate estimated availability; red boxes indicate estimated occupa
 | `smartParking.m` | Image selection, layout marking, results and export |
 | `analyzeParking.m` | Deterministic detection and input validation |
 | `testParking.m` | Synthetic regression tests |
+| `evaluation/` | Real-camera evaluation code, report, results and its own synthetic tests |
 | `bg.jpeg` / `car.jpeg` | Empty reference and current sample image |
 
 ## Tests
@@ -81,7 +82,7 @@ assert(~isempty(results), 'No tests discovered; inspect testParking.m.');
 assert(all([results.Passed]), 'Some parking tests failed.');
 ```
 
-Tests cover empty/full scenes, individual occupied spaces, repeatability, lane selection, consistent totals, invalid inputs, RGB/grayscale images, resizing, isolated noise and singleton references.
+Tests cover empty, full and partly occupied scenes, individual occupied spaces, repeatability, space order and pixel bounds, lane selection, consistent totals, threshold edges, invalid inputs and thresholds, image dimensions, RGB/grayscale images, resizing, isolated noise and singleton references.
 
 Test functions are named with a `test` prefix so `functiontests` discovers them ([functiontests documentation](https://www.mathworks.com/help/matlab/ref/functiontests.html)), and `testParking` errors if none are found. The supplied image pair also needs a matching layout; the 36-space preset should not be used to validate it.
 

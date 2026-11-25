@@ -17,7 +17,7 @@ Files in `results/pklot/` derived from PKLot (splits, references, review sample 
 | `labels.csv` | Frame, space, occupied (0, 1 or missing) |
 | `splits.csv` | Camera, day, split (`train`, `validation`, `test` or `setup`) |
 | `references.csv` | One empty reference per view |
-| `dataset.json` | Source, license, citation, checksum, and split and reference rules |
+| `dataset.json` | Source, license, citation, and split and reference rules; the archive checksum in the committed copy was added separately |
 
 A view is one camera position. When the annotated outlines change, the importer starts a new view with its own layout and reference. `readManifest.m` rejects manifests where a day has two splits, a reference comes from a test day or has an occupied space, or a held-out camera has training days.
 
@@ -25,7 +25,7 @@ A view is one camera position. When the annotated outlines change, the importer 
 
 - **Splits:** UFPR04 and UFPR05 days are split in date order into 60% training, 20% validation and 20% test. No day appears in two splits.
 - **Held-out camera:** PUCPR is never used for tuning. Its first 20% of days only supply an empty reference; the rest are test days.
-- **References:** per view, the fully vacant non-test frame closest in brightness to that view's non-test frames.
+- **References:** per view, up to 60 evenly spaced fully vacant non-test frames are considered, and the one closest in brightness to the median of up to 60 evenly spaced non-test frames is used.
 - **Spaces:** the app uses upright rectangles, so each tilted outline becomes its bounding box. "ROI scale" shrinks that box around its center.
 - **Baseline:** a running-average background that starts each day from the same reference and blends in pixels within the difference threshold.
 - **Tuning:** balanced accuracy on training days only (validation days were a check, and test days were scored in one run), over 8 difference thresholds, 45 occupied fractions, 3 ROI scales and, for the baseline, 4 learning rates.
@@ -79,11 +79,11 @@ Training and validation scores are in `results/pklot/summary.csv`.
 
 ## Failure analysis
 
-Breakdowns by weather, hour, brightness, estimated image shift, rectangle overlap and space size are in `conditions.csv`; per-space scores are in `per_space.csv`. These are associations, not proof of cause.
+Breakdowns by camera, weather, hour, brightness, estimated image shift, rectangle overlap and space size are in `conditions.csv`; per-space scores are in `per_space.csv`. These are associations, not proof of cause. Scores below are for the tuned fixed reference.
 
 - **Lighting:** PUCPR's fully vacant setup frames were only around 06:00 and 18:00, which led to a hazy dawn reference. Where frame and reference brightness were within 0.05, balanced accuracy was 0.927; where the frame was more than 0.10 brighter (85% of observations) it was 0.507. The background update cannot correct a gap larger than its threshold.
 - **Weather:** on known cameras, sunny days were worst (0.909, against 0.956 cloudy and 0.983 rainy).
-- **Alignment:** skipping setup after the camera moved dropped the tuned UFPR04 score from 0.931 to 0.618. Small estimated shifts showed no consistent trend.
+- **Alignment:** skipping setup after the camera moved dropped the tuned UFPR04 score from 0.931 to 0.618. Estimated shift showed no consistent trend on known cameras. On PUCPR, scores fell from 0.654 at 0 px to 0.502 above 5 px, but larger shifts coincided with brighter frames: among frames more than 0.10 brighter than the reference, scores stayed between 0.491 and 0.513 at every shift (computed from the predictions file, which is not committed).
 - **Low contrast:** red and dark cars can match the pavement's gray level.
 - **Shadows, occlusion and overlap:** shadows and neighboring cars caused some false-occupied errors. PKLot has no shadow or occlusion labels, so these could not be measured for the full set.
 
