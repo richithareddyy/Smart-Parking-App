@@ -87,7 +87,7 @@ Breakdowns by camera, weather, hour, brightness, estimated image shift, rectangl
 - **Low contrast:** red and dark cars can match the pavement's gray level.
 - **Shadows, occlusion and overlap:** shadows and neighboring cars caused some false-occupied errors. PKLot has no shadow or occlusion labels, so these could not be measured for the full set.
 
-A sample of 80 test errors was tagged from image crops: 10 per tuned setting (fixed and adaptive), group and error type, with at most one per camera day within each set of 10. The 80 sampled errors were tagged in a single AI-assisted pass and have not been checked by a person. Treat the tag counts as tentative. The tags in `review.csv` come from one quick, unblinded look at the contact sheets and have not been independently checked, so treat them as tentative. In several crops tagged low contrast, the car also fills only part of the box. Equal sampling means the counts do not estimate overall shares.
+A sample of 80 test errors was drawn from the tuned fixed and adaptive settings only: 10 per setting, group and error type, with at most one per camera day within each set of 10. The 80 sampled errors were tagged by an AI session in a single quick pass over image crops. The pass was unblinded and the tags in `review.csv` have not been checked by a person, so treat the tag counts as tentative. In several crops tagged low contrast, the car also fills only part of the box. Equal sampling means the counts do not estimate overall shares.
 
 | Group | Error | Tags |
 | --- | --- | --- |
